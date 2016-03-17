@@ -1,14 +1,24 @@
 package com.developers.roadsecure;
 
 
+import android.app.AlertDialog;
+
+
+
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+
+
+import android.os.CountDownTimer;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +26,7 @@ import android.widget.TextView;
 
 import com.cardiomood.android.controls.gauge.SpeedometerGauge;
 
-
+// gforce
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -26,6 +36,7 @@ public class Tab1 extends Fragment implements LocationListener {
     private float previousSpeed;
     private long previousTime;
     private boolean first=true;
+
     public Tab1() {
         // Required empty public constructor
     }
@@ -40,9 +51,26 @@ public class Tab1 extends Fragment implements LocationListener {
         lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
         //Intializing
         this.onLocationChanged(null);
+//
+//        final AlertDialog.Builder popup_timer = new AlertDialog.Builder(getActivity());
+//        popup_timer.setTitle("Alert");
+//        CountDownTimer gameTimer = new CountDownTimer(9000, 1000)
+//        {
+//            @Override
+//            public void onTick(long time_remaining)
+//            {
+//                popup_timer.setMessage("Time remaining:\t" + time_remaining);
+//            }
+//            @Override
+//            public void onFinish()
+//            {
+//            }
+//        };
+//        gameTimer.start();
+//        popup_timer.show();
 
-
-
+        AlertDFragment countDownDialog = new AlertDFragment();
+        countDownDialog.show(getActivity().getSupportFragmentManager(), "fragment_countdownTimer");
 
         return v;
     }
@@ -75,6 +103,9 @@ public class Tab1 extends Fragment implements LocationListener {
             t1.setText(acc + " m/s^2");
             double gforce = acc / 9.8;
             t2.setText(gforce + " force");
+
+
+
             previousSpeed = currentSpeed;
             previousTime = latestTime;
             //static speedometer
